@@ -59,6 +59,16 @@ The date picker provides deep access to styling via the `customization` prop:
 
 Check out [DATE_PICKER_DOC.md](https://github.com/Azime12/react-ethiopian-datepicker/blob/main/DATE_PICKER_DOC.md) for the full API.
 
+## 💻 Demo Application
+
+An example Vite application is included in the `frontend` directory to demonstrate various themes and configurations.
+
+To run it:
+1. `pnpm install` (in the root)
+2. `cd frontend`
+3. `pnpm install`
+4. `pnpm dev`
+
 ## 🤝 Contributing
 
 Contributions are welcome! Whether it's fixing a bug, adding a feature, or improving documentation. 
