@@ -1,9 +1,7 @@
 node_modules
 .DS_Store
-dist/
-build/
-.env*
 *.local
+pnpm-debug.log*
 
-# Monorepo specific
-!packages/react-ethiopian-datepicker/dist/
+# Include dist because we want to install directly from GitHub
+!dist/

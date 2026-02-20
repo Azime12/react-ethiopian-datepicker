@@ -1,0 +1,20 @@
+# Source code and tools
+src/
+vite.config.js
+tailwind.config.js
+postcss.config.js
+pnpm-lock.yaml
+
+# Configs
+.gitignore
+.npmignore
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Hidden files
+.DS_Store
+.git/
+.vscode/

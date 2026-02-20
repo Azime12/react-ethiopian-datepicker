@@ -1,0 +1,59 @@
+{
+  "name": "react-ethiopian-datepicker",
+  "version": "1.1.0",
+  "description": "A highly customizable dual-calendar Ethiopian Date Picker. Supports ዓ.ም & G.C. calendars, custom theming, icons, and labels. Zero dependency core logic.",
+  "author": "Azime",
+  "license": "MIT",
+  "homepage": "https://github.com/Azime12/react-ethiopian-datepicker#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azime12/react-ethiopian-datepicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Azime12/react-ethiopian-datepicker/issues"
+  },
+  "keywords": [
+    "ethiopia",
+    "ethiopian",
+    "ethiopic",
+    "amharic",
+    "calendar",
+    "datepicker",
+    "date-picker",
+    "react",
+    "ge'ez"
+  ],
+  "type": "module",
+  "main": "dist/react-ethiopian-datepicker.umd.cjs",
+  "module": "dist/react-ethiopian-datepicker.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react-ethiopian-datepicker.js",
+      "require": "./dist/react-ethiopian-datepicker.umd.cjs"
+    },
+    "./dist/style.css": "./dist/react-ethiopian-datepicker.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "lucide-react": ">=0.300.0",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.5.0"
+  }
+}
