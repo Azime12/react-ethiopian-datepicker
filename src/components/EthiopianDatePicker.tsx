@@ -125,20 +125,6 @@ function DayCell({ label, isToday, isSelected, isEmpty, onClick, customClasses =
                 isSelected ? 'eth-dp-day-selected' : '',
                 customClasses.base
             )}
-            style={{
-                backgroundColor: isSelected
-                    ? 'var(--dp-selected-bg)'
-                    : isToday
-                        ? 'var(--dp-primary-alpha)'
-                        : 'transparent',
-                color: isSelected
-                    ? '#fff'
-                    : isToday
-                        ? 'var(--dp-accent)'
-                        : 'var(--dp-text)',
-                boxShadow: (isSelected ? '0 4px 12px var(--dp-selected-shadow)' : 'none') as any,
-                border: (isToday && !isSelected ? '2px solid var(--dp-today-ring)' : 'none') as any,
-            }}
         >
             {label}
         </button>
@@ -188,16 +174,6 @@ function CalendarHeader({
     const toggleMonth = () => { setMonthOpen(o => !o); setYearOpen(false); };
     const toggleYear = () => { setYearOpen(o => !o); setMonthOpen(false); };
 
-    const pickerBtnStyle = (isOpen: boolean) => ({
-        backgroundColor: isOpen ? 'var(--dp-primary)' : 'var(--dp-primary-alpha)',
-        color: isOpen ? '#fff' : 'var(--dp-accent)'
-    });
-
-    const itemStyle = (active: boolean) => ({
-        backgroundColor: active ? 'var(--dp-primary)' : 'transparent',
-        color: active ? '#fff' : 'var(--dp-text)'
-    });
-
     const Prev = Icons.ChevronLeft || ChevronLeftIcon;
     const Next = Icons.ChevronRight || ChevronRightIcon;
 
@@ -207,7 +183,6 @@ function CalendarHeader({
                 type="button"
                 onClick={onPrev}
                 className={cn("eth-dp-nav-btn", customClasses.navBtn)}
-                style={{ color: 'var(--dp-text-muted)' }}
             >
                 <Prev size={16} />
             </button>
@@ -218,8 +193,7 @@ function CalendarHeader({
                         <button
                             type="button"
                             onClick={toggleMonth}
-                            style={pickerBtnStyle(monthOpen)}
-                            className={cn('eth-dp-picker-btn', customClasses.picker)}
+                            className={cn('eth-dp-picker-btn', customClasses.picker, monthOpen ? 'is-active' : '')}
                         >
                             {monthList[month - 1]} {badge && <span className="eth-dp-badge-wrapper">{badge}</span>} ▾
                         </button>
@@ -227,10 +201,6 @@ function CalendarHeader({
                             <div
                                 ref={monthListRef}
                                 className={cn('eth-dp-list-dropdown eth-dp-month-list', customClasses.dropdown)}
-                                style={{
-                                    backgroundColor: 'var(--dp-bg)',
-                                    borderColor: 'var(--dp-border)'
-                                }}
                             >
                                 {monthList.map((name, idx) => (
                                     <button
@@ -238,8 +208,7 @@ function CalendarHeader({
                                         type="button"
                                         data-selected={idx + 1 === month ? 'true' : 'false'}
                                         onClick={() => { onMonthChange(idx + 1); setMonthOpen(false); }}
-                                        className="eth-dp-list-item"
-                                        style={itemStyle(idx + 1 === month)}
+                                        className={cn('eth-dp-list-item', idx + 1 === month ? 'is-active' : '')}
                                     >
                                         {name}
                                     </button>
@@ -254,8 +223,7 @@ function CalendarHeader({
                         <button
                             type="button"
                             onClick={toggleYear}
-                            style={pickerBtnStyle(yearOpen)}
-                            className={cn('eth-dp-picker-btn', customClasses.picker)}
+                            className={cn('eth-dp-picker-btn', customClasses.picker, yearOpen ? 'is-active' : '')}
                         >
                             {year}{yearSuffix} ▾
                         </button>
@@ -263,10 +231,6 @@ function CalendarHeader({
                             <div
                                 ref={yearListRef}
                                 className={cn('eth-dp-list-dropdown eth-dp-year-list', customClasses.dropdown)}
-                                style={{
-                                    backgroundColor: 'var(--dp-bg)',
-                                    borderColor: 'var(--dp-border)'
-                                }}
                             >
                                 {yearRange.map(y => (
                                     <button
@@ -274,8 +238,7 @@ function CalendarHeader({
                                         type="button"
                                         data-selected={y === year ? 'true' : 'false'}
                                         onClick={() => { onYearChange(y); setYearOpen(false); }}
-                                        className="eth-dp-list-item"
-                                        style={itemStyle(y === year)}
+                                        className={cn('eth-dp-list-item', y === year ? 'is-active' : '')}
                                     >
                                         {y}{yearSuffix}
                                     </button>
@@ -290,7 +253,6 @@ function CalendarHeader({
                 type="button"
                 onClick={onNext}
                 className={cn("eth-dp-nav-btn", customClasses.navBtn)}
-                style={{ color: 'var(--dp-text-muted)' }}
             >
                 <Next size={16} />
             </button>
@@ -310,13 +272,7 @@ function EthGrid({ year, month, selectedEth, todayEth, onSelect, labels = {}, cu
     return (
         <div className="eth-dp-grid">
             {dayLabels.map((d) => (
-                <div
-                    key={d}
-                    className={cn("eth-dp-weekday", customClasses.weekday)}
-                    style={{ color: 'var(--dp-accent)' }}
-                >
-                    {d}
-                </div>
+                <div key={d} className={cn("eth-dp-weekday", customClasses.weekday)}>{d}</div>
             ))}
             {cells.map((day, i) =>
                 day === null ? (
@@ -350,13 +306,7 @@ function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, cus
     return (
         <div className="eth-dp-grid">
             {dayLabels.map((d) => (
-                <div
-                    key={d}
-                    className={cn("eth-dp-weekday", customClasses.weekday)}
-                    style={{ color: 'var(--dp-accent)' }}
-                >
-                    {d}
-                </div>
+                <div key={d} className={cn("eth-dp-weekday", customClasses.weekday)}>{d}</div>
             ))}
             {cells.map((day, i) =>
                 day === null ? (
@@ -376,7 +326,6 @@ function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, cus
     );
 }
 
-// ... existing interfaces ...
 export interface EthGridProps {
     year: number;
     month: number;
@@ -458,15 +407,15 @@ export default function EthiopianDatePicker({
     const themeStyles = {
         '--dp-primary': colors.primary || '#7c3aed',
         '--dp-primary-alpha': colors.primary ? `${colors.primary}26` : 'rgba(124, 58, 237, 0.15)',
-        '--dp-bg': colors.background || '#111827',
-        '--dp-bg-alt': colors.backgroundAlt || 'rgba(0, 0, 0, 0.2)',
-        '--dp-border': colors.border || 'rgba(255, 255, 255, 0.1)',
-        '--dp-text': colors.text || '#f3f4f6',
-        '--dp-text-muted': colors.textMuted || '#9ca3af',
-        '--dp-accent': colors.accent || '#a78bfa',
-        '--dp-today-ring': colors.todayRing || '#a78bfa',
+        '--dp-bg': colors.background || '#ffffff',
+        '--dp-bg-alt': colors.backgroundAlt || '#f8fafc',
+        '--dp-border': colors.border || '#e5e7eb',
+        '--dp-text': colors.text || '#111827',
+        '--dp-text-muted': colors.textMuted || '#6b7280',
+        '--dp-accent': colors.accent || '#7c3aed',
+        '--dp-today-ring': colors.todayRing || '#7c3aed',
         '--dp-selected-bg': colors.selectedBg || '#7c3aed',
-        '--dp-selected-shadow': colors.selectedShadow || 'rgba(109, 40, 217, 0.4)',
+        '--dp-selected-shadow': colors.selectedShadow || 'rgba(124, 58, 237, 0.4)',
         fontSize: config.fontSize || 'inherit',
         fontFamily: config.fontFamily || 'inherit',
     } as React.CSSProperties;
@@ -563,16 +512,12 @@ export default function EthiopianDatePicker({
                         'eth-dp-trigger',
                         sizeCls,
                         disabled ? 'eth-dp-disabled' : '',
-                        classes.trigger
+                        classes.trigger,
+                        open ? 'is-open' : ''
                     )}
-                    style={{
-                        backgroundColor: 'var(--dp-bg-alt)',
-                        borderColor: open ? 'var(--dp-primary)' : 'var(--dp-border)',
-                        boxShadow: (open ? '0 0 0 4px var(--dp-primary-alpha)' : 'none') as any
-                    }}
                 >
-                    <Calendar size={config.inputSize === 'sm' ? 13 : 15} style={{ color: 'var(--dp-accent)' }} />
-                    <span className="eth-dp-trigger-text" style={{ color: value ? 'var(--dp-text)' : 'var(--dp-text-muted)' }}>
+                    <Calendar size={18} className="eth-dp-trigger-icon" />
+                    <span className="eth-dp-trigger-text">
                         {displayLabel || placeholder}
                     </span>
                     {value && !disabled && !config.hideClear && (
@@ -581,9 +526,8 @@ export default function EthiopianDatePicker({
                             tabIndex={0}
                             onClick={handleClear}
                             className="eth-dp-clear-btn"
-                            style={{ color: 'var(--dp-text-muted)' }}
                         >
-                            <X size={config.inputSize === 'sm' ? 12 : 14} />
+                            <X size={16} />
                         </span>
                     )}
                 </button>
@@ -594,35 +538,21 @@ export default function EthiopianDatePicker({
                     <div
                         data-eth-dp="true"
                         className={cn("eth-dp-dropdown", classes.dropdown)}
-                        style={{
-                            ...themeStyles,
-                            backgroundColor: 'var(--dp-bg)',
-                            borderColor: 'var(--dp-border)',
-                            color: 'var(--dp-text)',
-                            animation: 'dpIn 0.16s cubic-bezier(.22,.68,0,1.2) both'
-                        } as any}
+                        style={{ animation: 'dpIn 0.15s ease-out both' } as any}
                     >
-                        <div className="eth-dp-tabs" style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
-                            <div className="eth-dp-tabs-group" style={{ backgroundColor: 'var(--dp-border)' }}>
+                        <div className="eth-dp-tabs">
+                            <div className="eth-dp-tabs-group">
                                 <button
                                     type="button"
                                     onClick={() => setCalType('ethiopian')}
-                                    className="eth-dp-tab"
-                                    style={{
-                                        backgroundColor: calType === 'ethiopian' ? 'var(--dp-primary)' : 'transparent',
-                                        color: calType === 'ethiopian' ? '#fff' : 'var(--dp-text-muted)'
-                                    }}
+                                    className={cn('eth-dp-tab', calType === 'ethiopian' ? 'is-active' : '')}
                                 >
                                     {labels.ethTab || '🇪🇹 ኢትዮጵያ'}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setCalType('gregorian')}
-                                    className="eth-dp-tab"
-                                    style={{
-                                        backgroundColor: calType === 'gregorian' ? 'var(--dp-primary)' : 'transparent',
-                                        color: calType === 'gregorian' ? '#fff' : 'var(--dp-text-muted)'
-                                    }}
+                                    className={cn('eth-dp-tab', calType === 'gregorian' ? 'is-active' : '')}
                                 >
                                     {labels.gregTab || '🌍 Gregorian'}
                                 </button>
@@ -632,9 +562,8 @@ export default function EthiopianDatePicker({
                                     type="button"
                                     onClick={() => setCalType(c => c === 'ethiopian' ? 'gregorian' : 'ethiopian')}
                                     className="eth-dp-tab-switch"
-                                    style={{ color: 'var(--dp-text-muted)' }}
                                 >
-                                    <Switch size={13} />
+                                    <Switch size={14} />
                                 </button>
                             )}
                         </div>
@@ -668,12 +597,6 @@ export default function EthiopianDatePicker({
                                         labels={{ days: labels.ethiopianDays }}
                                         customClasses={{ weekday: classes.weekday, dayCell: classes.dayCell }}
                                     />
-                                    {isPagume && (
-                                        <div className="eth-dp-pagume-info">
-                                            ፓጉሜ {pagumeDay} ቀናት አሉት
-                                            {pagumeDay === 6 ? ' · ዘመነ ዮሐንስ' : ' · ዘመነ ማቴዎስ / ማርቆስ / ሉቃስ'}
-                                        </div>
-                                    )}
                                 </>
                             ) : (
                                 <>
@@ -703,7 +626,7 @@ export default function EthiopianDatePicker({
                             )}
                         </div>
 
-                        <div className={cn("eth-dp-footer", classes.footer)} style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
+                        <div className={cn("eth-dp-footer", classes.footer)}>
                             <button
                                 type="button"
                                 onClick={() => {
@@ -718,98 +641,89 @@ export default function EthiopianDatePicker({
                                     }
                                 }}
                                 className="eth-dp-today-btn"
-                                style={{
-                                    backgroundColor: 'var(--dp-primary-alpha)',
-                                    borderColor: 'var(--dp-primary)',
-                                    color: 'var(--dp-accent)'
-                                }}
                             >
-                                <CalendarIcon size={12} />
+                                <CalendarIcon size={14} />
                                 {labels.today || 'ዛሬ (Today)'}
                             </button>
-
-                            {value && selectedEth && (
-                                <div className="eth-dp-values-compact" style={{ backgroundColor: 'var(--dp-bg)', borderColor: 'var(--dp-border)' }}>
-                                    <div className="eth-dp-val-row">
-                                        <span className="eth-dp-val-label">Eth</span>
-                                        <span className="eth-dp-val-text" style={{ color: 'var(--dp-accent)' }}>
-                                            {formatEthDate(selectedEth).split('፣')[0]}
-                                        </span>
-                                    </div>
-                                    <div className="eth-dp-val-row">
-                                        <span className="eth-dp-val-label">Greg</span>
-                                        <span className="eth-dp-val-text eth-dp-muted">
-                                            {value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </DropdownPortal>
             )}
 
             <style>{`
-                .eth-dp-theme-root [type="button"] { cursor: pointer; transition: all 0.15s; font-family: inherit; }
-                .eth-dp-theme-root [type="button"]:hover { filter: brightness(1.1); }
-                .eth-dp-theme-root [type="button"]:active { scale: 0.97; }
+                .eth-dp-theme-root {
+                    --dp-p: var(--dp-primary);
+                    --dp-pa: var(--dp-primary-alpha);
+                    --dp-b: var(--dp-bg);
+                    --dp-ba: var(--dp-bg-alt);
+                    --dp-br: var(--dp-border);
+                    --dp-t: var(--dp-text);
+                    --dp-tm: var(--dp-text-muted);
+                    --dp-ac: var(--dp-accent);
+                    --dp-tr: var(--dp-today-ring);
+                    --dp-sb: var(--dp-selected-bg);
+                    --dp-ss: var(--dp-selected-shadow);
+                }
+                .eth-dp-theme-root * { box-sizing: border-box; }
+                .eth-dp-theme-root [type="button"] { cursor: pointer; transition: all 0.15s; font-family: inherit; border: none; background: transparent; }
                 
                 .eth-dp-trigger-container { position: relative; width: 100%; display: flex; flex-direction: column; }
-                .eth-dp-label { display: block; text-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dp-text-muted); }
+                .eth-dp-label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dp-tm); }
                 
-                .eth-dp-trigger { display: flex; align-items: center; border: 1px solid; text-align: left; transition: all 0.2s; outline: none; width: 100%; gap: 10px; }
+                .eth-dp-trigger { display: flex; align-items: center; border: 1px solid var(--dp-br); text-align: left; transition: all 0.2s; outline: none; width: 100%; gap: 10px; background: var(--dp-b); color: var(--dp-t); }
+                .eth-dp-trigger.is-open { border-color: var(--dp-p); box-shadow: 0 0 0 3px var(--dp-pa); }
+                .eth-dp-trigger-icon { color: var(--dp-tm); }
                 .eth-dp-trigger-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
                 .eth-dp-disabled { opacity: 0.5; cursor: not-allowed !important; }
-                .eth-dp-size-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
-                .eth-dp-size-md { padding: 10px 16px; font-size: 14px; border-radius: 12px; }
-                .eth-dp-size-lg { padding: 14px 20px; font-size: 16px; border-radius: 16px; }
+                .eth-dp-size-sm { padding: 6px 10px; font-size: 13px; border-radius: 6px; }
+                .eth-dp-size-md { padding: 10px 14px; font-size: 14px; border-radius: 8px; }
+                .eth-dp-size-lg { padding: 14px 18px; font-size: 16px; border-radius: 12px; }
                 
-                .eth-dp-clear-btn { padding: 2px; border-radius: 4px; display: flex; align-items: center; }
-                .eth-dp-clear-btn:hover { background: rgba(255,255,255,0.1); }
+                .eth-dp-clear-btn { padding: 4px; border-radius: 4px; display: flex; align-items: center; color: var(--dp-tm); }
+                .eth-dp-clear-btn:hover { background: var(--dp-ba); color: var(--dp-t); }
                 
-                .eth-dp-dropdown { border-radius: 16px; border: 1px solid; box-shadow: 0 10px 40px rgba(0,0,0,0.4); overflow: hidden; display: flex; flex-direction: column; }
+                .eth-dp-dropdown { border-radius: 12px; border: 1px solid var(--dp-br); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); background: var(--dp-b); color: var(--dp-t); overflow: hidden; display: flex; flex-direction: column; }
                 
-                .eth-dp-tabs { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid; }
-                .eth-dp-tabs-group { display: flex; border-radius: 8px; padding: 2px; gap: 2px; }
-                .eth-dp-tab { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; }
-                .eth-dp-tab-switch { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: none; }
+                .eth-dp-tabs { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--dp-br); background: var(--dp-ba); }
+                .eth-dp-tabs-group { display: flex; background: var(--dp-br); border-radius: 6px; padding: 2px; gap: 2px; }
+                .eth-dp-tab { padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--dp-tm); }
+                .eth-dp-tab.is-active { background: var(--dp-b); color: var(--dp-p); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+                .eth-dp-tab-switch { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--dp-tm); }
+                .eth-dp-tab-switch:hover { background: var(--dp-br); color: var(--dp-t); }
                 
-                .eth-dp-cal-body { padding: 16px; }
+                .eth-dp-cal-body { padding: 14px; }
                 
                 .eth-dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-                .eth-dp-nav-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: none; }
-                .eth-dp-nav-btn:hover { background: rgba(255,255,255,0.1); }
+                .eth-dp-nav-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--dp-tm); }
+                .eth-dp-nav-btn:hover { background: var(--dp-ba); color: var(--dp-t); }
                 .eth-dp-picker-group { display: flex; align-items: center; gap: 4px; }
                 .eth-dp-rel { position: relative; }
-                .eth-dp-picker-btn { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; border: none; display: flex; align-items: center; gap: 4px; }
-                .eth-dp-badge-wrapper { display: inline-flex; }
+                .eth-dp-picker-btn { font-size: 13px; font-weight: 700; padding: 4px 8px; border-radius: 6px; color: var(--dp-t); }
+                .eth-dp-picker-btn.is-active { background: var(--dp-pa); color: var(--dp-p); }
                 
-                .eth-dp-list-dropdown { position: absolute; z-index: 50; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 4px; overflow-y: auto; border-radius: 12px; border: 1px solid; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-height: 180px; scrollbar-width: thin; }
-                .eth-dp-month-list { width: 120px; }
+                .eth-dp-list-dropdown { position: absolute; z-index: 50; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 4px; overflow-y: auto; border-radius: 8px; border: 1px solid var(--dp-br); background: var(--dp-b); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); max-height: 200px; }
+                .eth-dp-month-list { width: 130px; }
                 .eth-dp-year-list { width: 100px; }
-                .eth-dp-list-item { width: 100%; padding: 8px; font-size: 12px; text-align: center; border: none; background: transparent; }
-                .eth-dp-list-item:hover { background: rgba(255,255,255,0.1); }
+                .eth-dp-list-item { width: 100%; padding: 8px; font-size: 13px; text-align: center; color: var(--dp-t); }
+                .eth-dp-list-item:hover { background: var(--dp-ba); }
+                .eth-dp-list-item.is-active { background: var(--dp-p); color: #fff; }
                 
                 .eth-dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-                .eth-dp-weekday { text-align: center; font-weight: 700; font-size: 10px; height: 24px; display: flex; align-items: center; justify-content: center; opacity: 0.8; }
-                .eth-dp-day { height: 36px; border-radius: 8px; font-size: 14px; font-weight: 500; border: none; display: flex; align-items: center; justify-content: center; }
-                .eth-dp-day-selected { font-weight: 700; scale: 1.05; }
-                .eth-dp-day-empty { height: 36px; }
+                .eth-dp-weekday { text-align: center; font-weight: 700; font-size: 11px; height: 30px; display: flex; align-items: center; justify-content: center; color: var(--dp-tm); }
+                .eth-dp-day { height: 38px; border-radius: 6px; font-size: 14px; font-weight: 500; color: var(--dp-t); display: flex; align-items: center; justify-content: center; position: relative; }
+                .eth-dp-day:hover:not(.eth-dp-day-empty) { background: var(--dp-ba); }
+                .eth-dp-day-selected { background: var(--dp-sb) !important; color: #fff !important; font-weight: 700; box-shadow: 0 4px 10px var(--dp-ss); }
+                .eth-dp-day-empty { height: 38px; }
                 
-                .eth-dp-pagume-badge { font-size: 10px; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); padding: 2px 4px; border-radius: 99px; color: #fbbf24; }
-                .eth-dp-pagume-info { margin-top: 12px; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2); padding: 8px 12px; font-size: 11px; text-align: center; background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+                .eth-dp-pagume-badge { font-size: 10px; background: #fef3c7; color: #b45309; padding: 1px 4px; border-radius: 4px; margin-left: 4px; font-weight: 800; }
                 
-                .eth-dp-footer { padding: 12px 16px; border-top: 1px solid; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-                .eth-dp-today-btn { font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid; display: flex; align-items: center; gap: 6px; }
-                .eth-dp-values-compact { border-radius: 12px; border: 1px solid; padding: 8px; display: flex; flex-direction: column; gap: 4px; min-width: 140px; }
-                .eth-dp-val-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; overflow: hidden; }
-                .eth-dp-val-label { font-size: 9px; font-weight: 900; text-transform: uppercase; opacity: 0.3; }
-                .eth-dp-val-text { font-size: 10px; font-weight: 700; white-space: nowrap; }
-                .eth-dp-muted { color: #9ca3af; }
+                .eth-dp-footer { padding: 10px; border-top: 1px solid var(--dp-br); display: flex; align-items: center; justify-content: center; background: var(--dp-ba); }
+                .eth-dp-today-btn { font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 6px; border: 1px solid var(--dp-br); background: var(--dp-b); color: var(--dp-ac); display: flex; align-items: center; gap: 8px; }
+                .eth-dp-today-btn:hover { border-color: var(--dp-ac); background: var(--dp-ba); }
                 
                 @keyframes dpIn {
-                    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-                    to   { opacity: 1; transform: translateY(0) scale(1); }
+                    from { opacity: 0; transform: translateY(-5px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
             `}</style>
         </div>
