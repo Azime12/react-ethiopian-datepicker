@@ -537,8 +537,8 @@ export default function EthiopianDatePicker({
                 <DropdownPortal anchorRef={triggerRef} dropW={config.dropdownWidth || 316}>
                     <div
                         data-eth-dp="true"
-                        className={cn("eth-dp-dropdown", classes.dropdown)}
-                        style={{ animation: 'dpIn 0.15s ease-out both' } as any}
+                        className={cn("eth-dp-theme-root eth-dp-dropdown", classes.dropdown)}
+                        style={{ ...themeStyles, animation: 'dpIn 0.15s ease-out both' } as any}
                     >
                         <div className="eth-dp-tabs">
                             <div className="eth-dp-tabs-group">

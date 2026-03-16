@@ -348,8 +348,8 @@ function Fe({
       "div",
       {
         "data-eth-dp": "true",
-        className: m("eth-dp-dropdown", y.dropdown),
-        style: { animation: "dpIn 0.15s ease-out both" },
+        className: m("eth-dp-theme-root eth-dp-dropdown", y.dropdown),
+        style: { ...x, animation: "dpIn 0.15s ease-out both" },
         children: [
           /* @__PURE__ */ h("div", { className: "eth-dp-tabs", children: [
             /* @__PURE__ */ h("div", { className: "eth-dp-tabs-group", children: [
