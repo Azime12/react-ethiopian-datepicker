@@ -12,5 +12,6 @@ export {
   GREGORIAN_MONTHS_EN,
   GREGORIAN_DAYS_EN,
 } from './utils/calendar';
+export type { EthDate } from './utils/calendar';
 
 import './styles.css';

@@ -1,6 +1,6 @@
 # 🇪🇹 Ethiopian Date Picker - Documentation
 
-A professional, dual-calendar React component for handling Ethiopian (ዓ.ም) and Gregorian (G.C.) dates with 100% UI customizability.
+A professional, dual-calendar React component for handling Ethiopian (ዓ.ም) and Gregorian (G.C.) dates with zero external dependencies and 100% UI customizability.
 
 ---
 
@@ -72,7 +72,7 @@ customization={{
     hideClear: false,              // Hide the 'X' clear button
     hideSwitch: false,             // Hide the quick-toggle icon
     yearRangeEth: [2010, 2011...], // Custom year array
-    icons: {                       // Override Lucide icons
+    icons: {                       // Override internal SVG icons
       Calendar, X, Switch, ChevronLeft, ChevronRight 
     }
   }

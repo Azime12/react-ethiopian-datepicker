@@ -1,7 +1,7 @@
 {
   "name": "react-ethiopian-datepicker",
   "version": "1.1.0",
-  "description": "A highly customizable dual-calendar Ethiopian Date Picker. Supports ዓ.ም & G.C. calendars, custom theming, icons, and labels. Zero dependency core logic.",
+  "description": "A highly customizable dual-calendar Ethiopian Date Picker. Supports ዓ.ም & G.C. calendars, custom theming, icons, and labels. Zero external dependencies.",
   "author": "Azime",
   "license": "MIT",
   "homepage": "https://github.com/Azime12/react-ethiopian-datepicker#readme",
@@ -44,15 +44,18 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "lucide-react": ">=0.300.0",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
   "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3",
     "vite": "^6.0.7",
     "vite-plugin-dts": "^4.5.0"
   }

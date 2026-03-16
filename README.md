@@ -9,17 +9,16 @@ A professional, high-performance, and high-customizability dual-calendar React c
 ## 📦 Installation
 
 ```bash
-# This package requires lucide-react for icons
-pnpm add react-ethiopian-datepicker lucide-react
+pnpm add react-ethiopian-datepicker
 
 # or
-npm install react-ethiopian-datepicker lucide-react
+npm install react-ethiopian-datepicker
 
 # or
-yarn add react-ethiopian-datepicker lucide-react
+yarn add react-ethiopian-datepicker
 ```
 
-> **Why Lucide React?** To keep the package lightweight, we use `lucide-react` as a peer dependency. This prevents duplicate icon libraries in your final bundle.
+> **Zero Dependencies**: This component is built with native SVGs and zero external dependencies (other than React), keeping your bundle size extremely small.
 
 > **Note**: This package can also be installed directly from GitHub if preferred:
 > `npm install Azime12/react-ethiopian-datepicker`
@@ -28,6 +27,7 @@ yarn add react-ethiopian-datepicker lucide-react
 
 ```jsx
 import { EthiopianDatePicker } from 'react-ethiopian-datepicker';
+// If using the compiled version
 import 'react-ethiopian-datepicker/dist/style.css';
 
 function Application() {

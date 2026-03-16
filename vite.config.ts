@@ -10,17 +10,16 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'ReactEthiopianDatePicker',
       fileName: 'react-ethiopian-datepicker',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'lucide-react'],
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          'lucide-react': 'LucideReact',
         },
       },
     },
