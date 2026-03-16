@@ -1,4 +1,5 @@
 import { default as React } from 'react';
+import { EthDate } from '../utils/calendar';
 export interface CustomClasses {
     base?: string;
     container?: string;
@@ -69,5 +70,37 @@ export interface EthiopianDatePickerProps {
     placeholder?: string;
     disabled?: boolean;
     customization?: Customization;
+}
+export interface EthGridProps {
+    year: number;
+    month: number;
+    selectedEth: EthDate | null;
+    todayEth: EthDate | null;
+    onSelect: (y: number, m: number, d: number) => void;
+    labels?: {
+        days?: string[];
+    };
+    customClasses?: {
+        weekday?: string;
+        dayCell?: {
+            base?: string;
+        };
+    };
+}
+export interface GregGridProps {
+    year: number;
+    month: number;
+    selectedDate: Date | null;
+    today: Date;
+    onSelect: (date: Date) => void;
+    labels?: {
+        days?: string[];
+    };
+    customClasses?: {
+        weekday?: string;
+        dayCell?: {
+            base?: string;
+        };
+    };
 }
 export default function EthiopianDatePicker({ value, onChange, defaultCalendar, label, placeholder, disabled, customization }: EthiopianDatePickerProps): import("react/jsx-runtime").JSX.Element;

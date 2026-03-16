@@ -20,7 +20,7 @@ import {
     EthDate,
 } from '../utils/calendar';
 
-// --- INTERNAL SVG ICONS (Zero Dependency) ---
+// --- INTERNAL SVG ICONS ---
 const ChevronLeftIcon = ({ size = 16 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
 );
@@ -115,14 +115,14 @@ function DayCell({ label, isToday, isSelected, isEmpty, onClick, customClasses =
     onClick?: () => void;
     customClasses?: { base?: string };
 }) {
-    if (isEmpty) return <div className="w-9 h-9" />;
+    if (isEmpty) return <div className="eth-dp-day-empty" />;
     return (
         <button
             type="button"
             onClick={onClick}
             className={cn(
-                'w-9 h-9 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-100 focus:outline-none select-none',
-                isSelected ? 'shadow-md scale-105 font-bold' : '',
+                'eth-dp-day',
+                isSelected ? 'eth-dp-day-selected' : '',
                 customClasses.base
             )}
             style={{
@@ -198,42 +198,39 @@ function CalendarHeader({
         color: active ? '#fff' : 'var(--dp-text)'
     });
 
-    const dropdownCls = cn('absolute z-50 top-full left-1/2 -translate-x-1/2 mt-1 overflow-y-auto rounded-xl border shadow-2xl', customClasses.dropdown);
-
     const Prev = Icons.ChevronLeft || ChevronLeftIcon;
     const Next = Icons.ChevronRight || ChevronRightIcon;
 
     return (
-        <div className={cn('flex items-center justify-between mb-3', customClasses.container)}>
+        <div className={cn('eth-dp-header', customClasses.container)}>
             <button
                 type="button"
                 onClick={onPrev}
-                className={cn("w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10", customClasses.navBtn)}
+                className={cn("eth-dp-nav-btn", customClasses.navBtn)}
                 style={{ color: 'var(--dp-text-muted)' }}
             >
                 <Prev size={16} />
             </button>
 
-            <div className="flex items-center gap-1 select-none">
+            <div className="eth-dp-picker-group">
                 {monthList.length > 0 && onMonthChange ? (
-                    <div className="relative">
+                    <div className="eth-dp-rel">
                         <button
                             type="button"
                             onClick={toggleMonth}
                             style={pickerBtnStyle(monthOpen)}
-                            className={cn('text-xs font-bold px-2.5 py-1 rounded-lg transition-all', customClasses.picker)}
+                            className={cn('eth-dp-picker-btn', customClasses.picker)}
                         >
-                            {monthList[month - 1]} {badge && <span className="ml-0.5">{badge}</span>}▾
+                            {monthList[month - 1]} {badge && <span className="eth-dp-badge-wrapper">{badge}</span>} ▾
                         </button>
                         {monthOpen && (
                             <div
                                 ref={monthListRef}
-                                className={cn(dropdownCls, 'w-32 max-h-44')}
+                                className={cn('eth-dp-list-dropdown eth-dp-month-list', customClasses.dropdown)}
                                 style={{
-                                    scrollbarWidth: 'thin',
                                     backgroundColor: 'var(--dp-bg)',
                                     borderColor: 'var(--dp-border)'
-                                } as any}
+                                }}
                             >
                                 {monthList.map((name, idx) => (
                                     <button
@@ -241,7 +238,7 @@ function CalendarHeader({
                                         type="button"
                                         data-selected={idx + 1 === month ? 'true' : 'false'}
                                         onClick={() => { onMonthChange(idx + 1); setMonthOpen(false); }}
-                                        className={cn('w-full text-center text-xs py-2 transition-colors whitespace-nowrap px-3 hover:bg-[var(--dp-border)]')}
+                                        className="eth-dp-list-item"
                                         style={itemStyle(idx + 1 === month)}
                                     >
                                         {name}
@@ -253,24 +250,23 @@ function CalendarHeader({
                 ) : null}
 
                 {yearRange.length > 0 && onYearChange ? (
-                    <div className="relative">
+                    <div className="eth-dp-rel">
                         <button
                             type="button"
                             onClick={toggleYear}
                             style={pickerBtnStyle(yearOpen)}
-                            className={cn('text-xs font-bold px-2.5 py-1 rounded-lg transition-all', customClasses.picker)}
+                            className={cn('eth-dp-picker-btn', customClasses.picker)}
                         >
                             {year}{yearSuffix} ▾
                         </button>
                         {yearOpen && (
                             <div
                                 ref={yearListRef}
-                                className={cn(dropdownCls, 'w-28 max-h-44')}
+                                className={cn('eth-dp-list-dropdown eth-dp-year-list', customClasses.dropdown)}
                                 style={{
-                                    scrollbarWidth: 'thin',
                                     backgroundColor: 'var(--dp-bg)',
                                     borderColor: 'var(--dp-border)'
-                                } as any}
+                                }}
                             >
                                 {yearRange.map(y => (
                                     <button
@@ -278,7 +274,7 @@ function CalendarHeader({
                                         type="button"
                                         data-selected={y === year ? 'true' : 'false'}
                                         onClick={() => { onYearChange(y); setYearOpen(false); }}
-                                        className={cn('w-full text-center text-xs py-2 transition-colors whitespace-nowrap px-3 hover:bg-[var(--dp-border)]')}
+                                        className="eth-dp-list-item"
                                         style={itemStyle(y === year)}
                                     >
                                         {y}{yearSuffix}
@@ -293,23 +289,13 @@ function CalendarHeader({
             <button
                 type="button"
                 onClick={onNext}
-                className={cn("w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10", customClasses.navBtn)}
+                className={cn("eth-dp-nav-btn", customClasses.navBtn)}
                 style={{ color: 'var(--dp-text-muted)' }}
             >
                 <Next size={16} />
             </button>
         </div>
     );
-}
-
-interface EthGridProps {
-    year: number;
-    month: number;
-    selectedEth: EthDate | null;
-    todayEth: EthDate | null;
-    onSelect: (y: number, m: number, d: number) => void;
-    labels?: { days?: string[] };
-    customClasses?: { weekday?: string; dayCell?: { base?: string } };
 }
 
 function EthGrid({ year, month, selectedEth, todayEth, onSelect, labels = {}, customClasses = {} }: EthGridProps) {
@@ -322,12 +308,12 @@ function EthGrid({ year, month, selectedEth, todayEth, onSelect, labels = {}, cu
     for (let d = 1; d <= totalDays; d++)  cells.push(d);
 
     return (
-        <div className="grid grid-cols-7 gap-y-1 gap-x-0.5">
+        <div className="eth-dp-grid">
             {dayLabels.map((d) => (
                 <div
                     key={d}
-                    className={cn("w-9 h-7 flex items-center justify-center font-bold", customClasses.weekday)}
-                    style={{ color: 'var(--dp-accent)', fontSize: '10.5px', opacity: 0.9 }}
+                    className={cn("eth-dp-weekday", customClasses.weekday)}
+                    style={{ color: 'var(--dp-accent)' }}
                 >
                     {d}
                 </div>
@@ -350,16 +336,6 @@ function EthGrid({ year, month, selectedEth, todayEth, onSelect, labels = {}, cu
     );
 }
 
-interface GregGridProps {
-    year: number;
-    month: number;
-    selectedDate: Date | null;
-    today: Date;
-    onSelect: (date: Date) => void;
-    labels?: { days?: string[] };
-    customClasses?: { weekday?: string; dayCell?: { base?: string } };
-}
-
 function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, customClasses = {} }: GregGridProps) {
     const firstDay = getGregorianFirstDay(year, month);
     const totalDays = getDaysInGregorianMonth(year, month);
@@ -372,12 +348,12 @@ function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, cus
     const same = (d: number, ref: Date | null) => ref && d === ref.getDate() && month === ref.getMonth() + 1 && year === ref.getFullYear();
 
     return (
-        <div className="grid grid-cols-7 gap-y-1 gap-x-0.5">
+        <div className="eth-dp-grid">
             {dayLabels.map((d) => (
                 <div
                     key={d}
-                    className={cn("w-9 h-7 flex items-center justify-center font-bold", customClasses.weekday)}
-                    style={{ color: 'var(--dp-accent)', fontSize: '10.5px', opacity: 0.8 }}
+                    className={cn("eth-dp-weekday", customClasses.weekday)}
+                    style={{ color: 'var(--dp-accent)' }}
                 >
                     {d}
                 </div>
@@ -400,6 +376,27 @@ function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, cus
     );
 }
 
+// ... existing interfaces ...
+export interface EthGridProps {
+    year: number;
+    month: number;
+    selectedEth: EthDate | null;
+    todayEth: EthDate | null;
+    onSelect: (y: number, m: number, d: number) => void;
+    labels?: { days?: string[] };
+    customClasses?: { weekday?: string; dayCell?: { base?: string } };
+}
+
+export interface GregGridProps {
+    year: number;
+    month: number;
+    selectedDate: Date | null;
+    today: Date;
+    onSelect: (date: Date) => void;
+    labels?: { days?: string[] };
+    customClasses?: { weekday?: string; dayCell?: { base?: string } };
+}
+
 function DropdownPortal({ anchorRef, children, dropW = 316 }: { anchorRef: React.RefObject<HTMLElement | null>; children: ReactNode; dropW?: number }) {
     const [style, setStyle] = useState<React.CSSProperties>({ opacity: 0 });
 
@@ -408,7 +405,6 @@ function DropdownPortal({ anchorRef, children, dropW = 316 }: { anchorRef: React
         const rect = anchorRef.current.getBoundingClientRect();
         let left = rect.left + window.scrollX;
         
-        // Prevent overflow
         if (left + dropW > window.innerWidth - 8) {
             left = window.innerWidth - dropW - 8;
         }
@@ -457,11 +453,7 @@ export default function EthiopianDatePicker({
         Switch: config.icons?.Switch || SwitchIcon,
     };
 
-    const sizeCls = {
-        sm: 'px-3 py-1.5 text-xs rounded-lg gap-2',
-        md: 'px-4 py-2.5 text-sm rounded-xl gap-3',
-        lg: 'px-5 py-3.5 text-base rounded-2xl gap-4',
-    }[config.inputSize || 'md'];
+    const sizeCls = `eth-dp-size-${config.inputSize || 'md'}`;
 
     const themeStyles = {
         '--dp-primary': colors.primary || '#7c3aed',
@@ -556,9 +548,9 @@ export default function EthiopianDatePicker({
 
     return (
         <div style={themeStyles} className="eth-dp-theme-root">
-            <div ref={triggerRef} className={cn("relative w-full", classes.container)}>
+            <div ref={triggerRef} className={cn("eth-dp-trigger-container", classes.container)}>
                 {label && (
-                    <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style={{ color: 'var(--dp-text-muted)' }}>
+                    <label className="eth-dp-label">
                         {label}
                     </label>
                 )}
@@ -568,9 +560,9 @@ export default function EthiopianDatePicker({
                     disabled={disabled}
                     onClick={() => { if (!disabled) setOpen(o => !o); }}
                     className={cn(
-                        'w-full flex items-center border text-left transition-all duration-200 focus:outline-none',
+                        'eth-dp-trigger',
                         sizeCls,
-                        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-[var(--dp-border)]',
+                        disabled ? 'eth-dp-disabled' : '',
                         classes.trigger
                     )}
                     style={{
@@ -579,8 +571,8 @@ export default function EthiopianDatePicker({
                         boxShadow: (open ? '0 0 0 4px var(--dp-primary-alpha)' : 'none') as any
                     }}
                 >
-                    <Calendar size={config.inputSize === 'sm' ? 13 : 15} style={{ color: 'var(--dp-accent)' }} className="shrink-0" />
-                    <span className="flex-1 truncate" style={{ color: value ? 'var(--dp-text)' : 'var(--dp-text-muted)' }}>
+                    <Calendar size={config.inputSize === 'sm' ? 13 : 15} style={{ color: 'var(--dp-accent)' }} />
+                    <span className="eth-dp-trigger-text" style={{ color: value ? 'var(--dp-text)' : 'var(--dp-text-muted)' }}>
                         {displayLabel || placeholder}
                     </span>
                     {value && !disabled && !config.hideClear && (
@@ -588,7 +580,7 @@ export default function EthiopianDatePicker({
                             role="button"
                             tabIndex={0}
                             onClick={handleClear}
-                            className="p-0.5 rounded hover:bg-white/10 transition-colors shrink-0"
+                            className="eth-dp-clear-btn"
                             style={{ color: 'var(--dp-text-muted)' }}
                         >
                             <X size={config.inputSize === 'sm' ? 12 : 14} />
@@ -601,22 +593,21 @@ export default function EthiopianDatePicker({
                 <DropdownPortal anchorRef={triggerRef} dropW={config.dropdownWidth || 316}>
                     <div
                         data-eth-dp="true"
-                        className={cn("rounded-2xl border shadow-2xl overflow-hidden", classes.dropdown)}
+                        className={cn("eth-dp-dropdown", classes.dropdown)}
                         style={{
                             ...themeStyles,
                             backgroundColor: 'var(--dp-bg)',
                             borderColor: 'var(--dp-border)',
                             color: 'var(--dp-text)',
-                            animation: 'dpIn 0.16s cubic-bezier(.22,.68,0,1.2) both',
-                            zIndex: 999999
+                            animation: 'dpIn 0.16s cubic-bezier(.22,.68,0,1.2) both'
                         } as any}
                     >
-                        <div className="flex items-center justify-between px-4 py-2.5 border-b" style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
-                            <div className="flex rounded-lg p-0.5 gap-0.5" style={{ backgroundColor: 'var(--dp-border)' }}>
+                        <div className="eth-dp-tabs" style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
+                            <div className="eth-dp-tabs-group" style={{ backgroundColor: 'var(--dp-border)' }}>
                                 <button
                                     type="button"
                                     onClick={() => setCalType('ethiopian')}
-                                    className="px-3 py-1 rounded-md text-xs font-semibold transition-all"
+                                    className="eth-dp-tab"
                                     style={{
                                         backgroundColor: calType === 'ethiopian' ? 'var(--dp-primary)' : 'transparent',
                                         color: calType === 'ethiopian' ? '#fff' : 'var(--dp-text-muted)'
@@ -627,7 +618,7 @@ export default function EthiopianDatePicker({
                                 <button
                                     type="button"
                                     onClick={() => setCalType('gregorian')}
-                                    className="px-3 py-1 rounded-md text-xs font-semibold transition-all"
+                                    className="eth-dp-tab"
                                     style={{
                                         backgroundColor: calType === 'gregorian' ? 'var(--dp-primary)' : 'transparent',
                                         color: calType === 'gregorian' ? '#fff' : 'var(--dp-text-muted)'
@@ -640,7 +631,7 @@ export default function EthiopianDatePicker({
                                 <button
                                     type="button"
                                     onClick={() => setCalType(c => c === 'ethiopian' ? 'gregorian' : 'ethiopian')}
-                                    className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10"
+                                    className="eth-dp-tab-switch"
                                     style={{ color: 'var(--dp-text-muted)' }}
                                 >
                                     <Switch size={13} />
@@ -648,7 +639,7 @@ export default function EthiopianDatePicker({
                             )}
                         </div>
 
-                        <div className="p-4">
+                        <div className="eth-dp-cal-body">
                             {calType === 'ethiopian' ? (
                                 <>
                                     <CalendarHeader
@@ -657,7 +648,7 @@ export default function EthiopianDatePicker({
                                         monthList={labels.ethiopianMonths || ETHIOPIAN_MONTHS_AM}
                                         onMonthChange={(m) => setEthNav(n => ({ ...n, month: m }))}
                                         badge={isPagume
-                                            ? <span className="text-[10px] bg-amber-400/10 border border-amber-400/20 px-1 py-0.5 rounded-full ml-0.5 text-amber-400">{pagumeDay}{labels.pagumeSuffix || 'ቀ'}</span>
+                                            ? <span className="eth-dp-pagume-badge">{pagumeDay}{labels.pagumeSuffix || 'ቀ'}</span>
                                             : null
                                         }
                                         year={ethNav.year}
@@ -678,9 +669,9 @@ export default function EthiopianDatePicker({
                                         customClasses={{ weekday: classes.weekday, dayCell: classes.dayCell }}
                                     />
                                     {isPagume && (
-                                        <div className="mt-3 rounded-lg border px-3 py-2 text-[11px] text-center leading-relaxed" style={{ backgroundColor: 'rgba(251, 191, 36, 0.1)', borderColor: 'rgba(251, 191, 36, 0.2)', color: '#fcd34d' }}>
+                                        <div className="eth-dp-pagume-info">
                                             ፓጉሜ {pagumeDay} ቀናት አሉት
-                                            {pagumeDay === 6 ? ' · ዘመነ ዮሐንስ (የሐሙስ ዓመት)' : ' · ዘመነ ማቴዎስ / ማርቆስ / ሉቃስ'}
+                                            {pagumeDay === 6 ? ' · ዘመነ ዮሐንስ' : ' · ዘመነ ማቴዎስ / ማርቆስ / ሉቃስ'}
                                         </div>
                                     )}
                                 </>
@@ -712,7 +703,7 @@ export default function EthiopianDatePicker({
                             )}
                         </div>
 
-                        <div className={cn("px-4 py-3 border-t flex items-center justify-between gap-3", classes.footer)} style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
+                        <div className={cn("eth-dp-footer", classes.footer)} style={{ borderColor: 'var(--dp-border)', backgroundColor: 'var(--dp-bg-alt)' }}>
                             <button
                                 type="button"
                                 onClick={() => {
@@ -726,7 +717,7 @@ export default function EthiopianDatePicker({
                                         handleGregSelect(t);
                                     }
                                 }}
-                                className="text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all hover:brightness-110 active:scale-95 flex items-center gap-1.5"
+                                className="eth-dp-today-btn"
                                 style={{
                                     backgroundColor: 'var(--dp-primary-alpha)',
                                     borderColor: 'var(--dp-primary)',
@@ -738,16 +729,16 @@ export default function EthiopianDatePicker({
                             </button>
 
                             {value && selectedEth && (
-                                <div className="flex-1 rounded-xl border p-2.5 space-y-1 max-w-[170px]" style={{ backgroundColor: 'var(--dp-bg)', borderColor: 'var(--dp-border)' }}>
-                                    <div className="flex items-center justify-between gap-2 overflow-hidden">
-                                        <span className="text-[9px] uppercase font-black opacity-30 shrink-0">Eth</span>
-                                        <span className="text-[10px] font-bold truncate text-right" style={{ color: 'var(--dp-accent)' }}>
+                                <div className="eth-dp-values-compact" style={{ backgroundColor: 'var(--dp-bg)', borderColor: 'var(--dp-border)' }}>
+                                    <div className="eth-dp-val-row">
+                                        <span className="eth-dp-val-label">Eth</span>
+                                        <span className="eth-dp-val-text" style={{ color: 'var(--dp-accent)' }}>
                                             {formatEthDate(selectedEth).split('፣')[0]}
                                         </span>
                                     </div>
-                                    <div className="flex items-center justify-between gap-2 overflow-hidden">
-                                        <span className="text-[9px] uppercase font-black opacity-30 shrink-0">Greg</span>
-                                        <span className="text-[10px] font-bold truncate text-right text-gray-300">
+                                    <div className="eth-dp-val-row">
+                                        <span className="eth-dp-val-label">Greg</span>
+                                        <span className="eth-dp-val-text eth-dp-muted">
                                             {value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                                         </span>
                                     </div>
@@ -759,9 +750,63 @@ export default function EthiopianDatePicker({
             )}
 
             <style>{`
-                .eth-dp-theme-root [type="button"]:hover {
-                    background-color: var(--dp-border);
-                }
+                .eth-dp-theme-root [type="button"] { cursor: pointer; transition: all 0.15s; font-family: inherit; }
+                .eth-dp-theme-root [type="button"]:hover { filter: brightness(1.1); }
+                .eth-dp-theme-root [type="button"]:active { scale: 0.97; }
+                
+                .eth-dp-trigger-container { position: relative; width: 100%; display: flex; flex-direction: column; }
+                .eth-dp-label { display: block; text-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dp-text-muted); }
+                
+                .eth-dp-trigger { display: flex; align-items: center; border: 1px solid; text-align: left; transition: all 0.2s; outline: none; width: 100%; gap: 10px; }
+                .eth-dp-trigger-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                .eth-dp-disabled { opacity: 0.5; cursor: not-allowed !important; }
+                .eth-dp-size-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
+                .eth-dp-size-md { padding: 10px 16px; font-size: 14px; border-radius: 12px; }
+                .eth-dp-size-lg { padding: 14px 20px; font-size: 16px; border-radius: 16px; }
+                
+                .eth-dp-clear-btn { padding: 2px; border-radius: 4px; display: flex; align-items: center; }
+                .eth-dp-clear-btn:hover { background: rgba(255,255,255,0.1); }
+                
+                .eth-dp-dropdown { border-radius: 16px; border: 1px solid; box-shadow: 0 10px 40px rgba(0,0,0,0.4); overflow: hidden; display: flex; flex-direction: column; }
+                
+                .eth-dp-tabs { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid; }
+                .eth-dp-tabs-group { display: flex; border-radius: 8px; padding: 2px; gap: 2px; }
+                .eth-dp-tab { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; }
+                .eth-dp-tab-switch { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: none; }
+                
+                .eth-dp-cal-body { padding: 16px; }
+                
+                .eth-dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+                .eth-dp-nav-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: none; }
+                .eth-dp-nav-btn:hover { background: rgba(255,255,255,0.1); }
+                .eth-dp-picker-group { display: flex; align-items: center; gap: 4px; }
+                .eth-dp-rel { position: relative; }
+                .eth-dp-picker-btn { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px; border: none; display: flex; align-items: center; gap: 4px; }
+                .eth-dp-badge-wrapper { display: inline-flex; }
+                
+                .eth-dp-list-dropdown { position: absolute; z-index: 50; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 4px; overflow-y: auto; border-radius: 12px; border: 1px solid; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-height: 180px; scrollbar-width: thin; }
+                .eth-dp-month-list { width: 120px; }
+                .eth-dp-year-list { width: 100px; }
+                .eth-dp-list-item { width: 100%; padding: 8px; font-size: 12px; text-align: center; border: none; background: transparent; }
+                .eth-dp-list-item:hover { background: rgba(255,255,255,0.1); }
+                
+                .eth-dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+                .eth-dp-weekday { text-align: center; font-weight: 700; font-size: 10px; height: 24px; display: flex; align-items: center; justify-content: center; opacity: 0.8; }
+                .eth-dp-day { height: 36px; border-radius: 8px; font-size: 14px; font-weight: 500; border: none; display: flex; align-items: center; justify-content: center; }
+                .eth-dp-day-selected { font-weight: 700; scale: 1.05; }
+                .eth-dp-day-empty { height: 36px; }
+                
+                .eth-dp-pagume-badge { font-size: 10px; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); padding: 2px 4px; border-radius: 99px; color: #fbbf24; }
+                .eth-dp-pagume-info { margin-top: 12px; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2); padding: 8px 12px; font-size: 11px; text-align: center; background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+                
+                .eth-dp-footer { padding: 12px 16px; border-top: 1px solid; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+                .eth-dp-today-btn { font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid; display: flex; align-items: center; gap: 6px; }
+                .eth-dp-values-compact { border-radius: 12px; border: 1px solid; padding: 8px; display: flex; flex-direction: column; gap: 4px; min-width: 140px; }
+                .eth-dp-val-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; overflow: hidden; }
+                .eth-dp-val-label { font-size: 9px; font-weight: 900; text-transform: uppercase; opacity: 0.3; }
+                .eth-dp-val-text { font-size: 10px; font-weight: 700; white-space: nowrap; }
+                .eth-dp-muted { color: #9ca3af; }
+                
                 @keyframes dpIn {
                     from { opacity: 0; transform: translateY(-8px) scale(0.97); }
                     to   { opacity: 1; transform: translateY(0) scale(1); }
