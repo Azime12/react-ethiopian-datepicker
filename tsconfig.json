@@ -16,7 +16,7 @@
     "noEmit": false,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

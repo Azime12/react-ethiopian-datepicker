@@ -1,5 +1,5 @@
-import { default as React } from 'react';
 import { EthDate } from '../utils/calendar';
+import * as React from 'react';
 export interface CustomClasses {
     base?: string;
     container?: string;
@@ -103,4 +103,4 @@ export interface GregGridProps {
         };
     };
 }
-export default function EthiopianDatePicker({ value, onChange, defaultCalendar, label, placeholder, disabled, customization }: EthiopianDatePickerProps): import("react/jsx-runtime").JSX.Element;
+export default function EthiopianDatePicker({ value, onChange, defaultCalendar, label, placeholder, disabled, customization }: EthiopianDatePickerProps): React.JSX.Element;

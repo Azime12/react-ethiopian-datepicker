@@ -46,22 +46,19 @@ const fe = (e) => e % 4 === 3, oe = (e, t) => t < 13 ? 30 : fe(e) ? 6 : 5, me = 
   /* @__PURE__ */ r("path", { d: "M7 20V4" }),
   /* @__PURE__ */ r("path", { d: "m21 8-4-4-4 4" }),
   /* @__PURE__ */ r("path", { d: "M17 4v16" })
-] }), y = (...e) => e.filter(Boolean).join(" ");
-function R({ label: e, isToday: t, isSelected: a, isEmpty: n, onClick: p, customClasses: d = {} }) {
-  return n ? /* @__PURE__ */ r("div", { className: "eth-dp-day-empty" }) : /* @__PURE__ */ r(
-    "button",
-    {
-      type: "button",
-      onClick: p,
-      className: y(
-        "eth-dp-day",
-        a ? "eth-dp-day-selected" : "",
-        d.base
-      ),
-      children: e
-    }
-  );
-}
+] }), y = (...e) => e.filter(Boolean).join(" "), R = ({ label: e, isToday: t, isSelected: a, isEmpty: n, onClick: p, customClasses: d = {} }) => n ? /* @__PURE__ */ r("div", { className: "eth-dp-day-empty" }) : /* @__PURE__ */ r(
+  "button",
+  {
+    type: "button",
+    onClick: p,
+    className: y(
+      "eth-dp-day",
+      a ? "eth-dp-day-selected" : "",
+      d.base
+    ),
+    children: e
+  }
+);
 function Z({
   onPrev: e,
   onNext: t,

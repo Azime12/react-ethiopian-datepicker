@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+/// <reference types="react" />
+import * as React from 'react';
+import { useState, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import {
     ETHIOPIAN_MONTHS_AM,
@@ -22,19 +24,19 @@ import {
 
 // --- INTERNAL SVG ICONS ---
 const ChevronLeftIcon = ({ size = 16 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
 );
 const ChevronRightIcon = ({ size = 16 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
 );
 const CalendarIcon = ({ size = 16 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></svg>
 );
 const XIcon = ({ size = 16 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
 );
 const SwitchIcon = ({ size = 16 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 16 4 4 4-4" /><path d="M7 20V4" /><path d="m21 8-4-4-4 4" /><path d="M17 4v16" /></svg>
 );
 
 const cn = (...c: (string | boolean | undefined)[]) => c.filter(Boolean).join(' ');
@@ -107,14 +109,16 @@ export interface EthiopianDatePickerProps {
     customization?: Customization;
 }
 
-function DayCell({ label, isToday, isSelected, isEmpty, onClick, customClasses = {} }: {
+interface DayCellProps {
     label?: string | number;
     isToday?: boolean;
     isSelected?: boolean;
     isEmpty?: boolean;
     onClick?: () => void;
     customClasses?: { base?: string };
-}) {
+}
+
+const DayCell: React.FC<DayCellProps> = ({ label, isToday, isSelected, isEmpty, onClick, customClasses = {} }) => {
     if (isEmpty) return <div className="eth-dp-day-empty" />;
     return (
         <button
@@ -322,6 +326,7 @@ function GregGrid({ year, month, selectedDate, today, onSelect, labels = {}, cus
                     />
                 )
             )}
+
         </div>
     );
 }
@@ -353,7 +358,7 @@ function DropdownPortal({ anchorRef, children, dropW = 316 }: { anchorRef: React
         if (!anchorRef.current) return;
         const rect = anchorRef.current.getBoundingClientRect();
         let left = rect.left + window.scrollX;
-        
+
         if (left + dropW > window.innerWidth - 8) {
             left = window.innerWidth - dropW - 8;
         }
@@ -368,7 +373,7 @@ function DropdownPortal({ anchorRef, children, dropW = 316 }: { anchorRef: React
         // If there is not enough space below, and there is more space above than below, flip it up
         if (spaceBelow < estimatedDropHeight && spaceAbove > spaceBelow) {
             topPosition = rect.top + window.scrollY - estimatedDropHeight - 6;
-            
+
             // Prevent it from clipping off the very top of the document
             if (topPosition < window.scrollY + 6) {
                 topPosition = window.scrollY + 6;
