@@ -359,9 +359,25 @@ function DropdownPortal({ anchorRef, children, dropW = 316 }: { anchorRef: React
         }
         if (left < 8) left = 8;
 
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const spaceAbove = rect.top;
+        const estimatedDropHeight = 380; // Approximate height of the calendar dropdown
+
+        let topPosition = rect.bottom + window.scrollY + 6;
+
+        // If there is not enough space below, and there is more space above than below, flip it up
+        if (spaceBelow < estimatedDropHeight && spaceAbove > spaceBelow) {
+            topPosition = rect.top + window.scrollY - estimatedDropHeight - 6;
+            
+            // Prevent it from clipping off the very top of the document
+            if (topPosition < window.scrollY + 6) {
+                topPosition = window.scrollY + 6;
+            }
+        }
+
         setStyle({
             position: 'absolute',
-            top: rect.bottom + window.scrollY + 6,
+            top: topPosition,
             left,
             width: dropW,
             zIndex: 99999,
