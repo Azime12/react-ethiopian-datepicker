@@ -1,28 +1,28 @@
-import { jsxs as h, jsx as r, Fragment as U } from "react/jsx-runtime";
-import { useState as D, useRef as A, useEffect as G, useCallback as P } from "react";
+import { jsxs as u, jsx as r, Fragment as U } from "react/jsx-runtime";
+import { useState as D, useRef as O, useEffect as j, useCallback as P } from "react";
 import { createPortal as ge } from "react-dom";
 function ue(e, t, a) {
-  const n = Math.floor((14 - t) / 12), i = e + 4800 - n, d = t + 12 * n - 3;
-  return a + Math.floor((153 * d + 2) / 5) + 365 * i + Math.floor(i / 4) - Math.floor(i / 100) + Math.floor(i / 400) - 32045;
+  const n = Math.floor((14 - t) / 12), p = e + 4800 - n, d = t + 12 * n - 3;
+  return a + Math.floor((153 * d + 2) / 5) + 365 * p + Math.floor(p / 4) - Math.floor(p / 100) + Math.floor(p / 400) - 32045;
 }
 function ee(e) {
-  const t = e + 32044, a = Math.floor((4 * t + 3) / 146097), n = t - Math.floor(146097 * a / 4), i = Math.floor((4 * n + 3) / 1461), d = n - Math.floor(1461 * i / 4), f = Math.floor((5 * d + 2) / 153);
+  const t = e + 32044, a = Math.floor((4 * t + 3) / 146097), n = t - Math.floor(146097 * a / 4), p = Math.floor((4 * n + 3) / 1461), d = n - Math.floor(1461 * p / 4), h = Math.floor((5 * d + 2) / 153);
   return {
-    day: d - Math.floor((153 * f + 2) / 5) + 1,
-    month: f + 3 - 12 * Math.floor(f / 10),
-    year: 100 * a + i - 4800 + Math.floor(f / 10)
+    day: d - Math.floor((153 * h + 2) / 5) + 1,
+    month: h + 3 - 12 * Math.floor(h / 10),
+    year: 100 * a + p - 4800 + Math.floor(h / 10)
   };
 }
 const te = 1724221;
 function re(e, t, a) {
-  const n = Math.floor((e - 1) / 4), i = (e - 1) % 4, d = [0, 365, 730, 1096][i];
+  const n = Math.floor((e - 1) / 4), p = (e - 1) % 4, d = [0, 365, 730, 1096][p];
   return te + 1461 * n + d + 30 * (t - 1) + (a - 1);
 }
 function be(e) {
   const t = e - te, a = Math.floor(t / 1461), n = t % 1461;
-  let i, d;
-  return n < 365 ? (i = 0, d = n) : n < 730 ? (i = 1, d = n - 365) : n < 1096 ? (i = 2, d = n - 730) : (i = 3, d = n - 1096), {
-    year: 4 * a + i + 1,
+  let p, d;
+  return n < 365 ? (p = 0, d = n) : n < 730 ? (p = 1, d = n - 365) : n < 1096 ? (p = 2, d = n - 730) : (p = 3, d = n - 1096), {
+    year: 4 * a + p + 1,
     month: Math.floor(d / 30) + 1,
     day: d % 30 + 1
   };
@@ -30,30 +30,30 @@ function be(e) {
 const fe = (e) => e % 4 === 3, oe = (e, t) => t < 13 ? 30 : fe(e) ? 6 : 5, me = (e, t) => new Date(e, t, 0).getDate(), ye = (e, t) => new Date(e, t - 1, 1).getDay(), xe = (e, t) => {
   const a = ee(re(e, t, 1));
   return new Date(a.year, a.month - 1, a.day).getDay();
-}, j = (e) => be(ue(e.getFullYear(), e.getMonth() + 1, e.getDate())), ve = (e, t, a) => {
+}, Y = (e) => be(ue(e.getFullYear(), e.getMonth() + 1, e.getDate())), ve = (e, t, a) => {
   const n = ee(re(e, t, a));
   return new Date(n.year, n.month - 1, n.day);
-}, ne = ["መስከረም", "ጥቅምት", "ሕዳር", "ታሕሳስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዚያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ፓጉሜ"], we = ["እሑ", "ሰኞ", "ማክ", "ረቡ", "ሐሙ", "ዓር", "ቅዳ"], ke = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], Ne = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], Me = (e) => e ? `${ne[e.month - 1]} ${e.day}፣ ${e.year} ዓ.ም` : "", De = (e) => e ? e.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "", Ce = ({ year: e, month: t }) => t === 1 ? { year: e - 1, month: 13 } : { year: e, month: t - 1 }, Se = ({ year: e, month: t }) => t === 13 ? { year: e + 1, month: 1 } : { year: e, month: t + 1 }, Ee = ({ year: e, month: t }) => t === 1 ? { year: e - 1, month: 12 } : { year: e, month: t - 1 }, Le = ({ year: e, month: t }) => t === 12 ? { year: e + 1, month: 1 } : { year: e, month: t + 1 }, ae = ({ size: e = 16 }) => /* @__PURE__ */ r("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ r("path", { d: "m15 18-6-6 6-6" }) }), de = ({ size: e = 16 }) => /* @__PURE__ */ r("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ r("path", { d: "m9 18 6-6-6-6" }) }), O = ({ size: e = 16 }) => /* @__PURE__ */ h("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+}, ne = ["መስከረም", "ጥቅምት", "ሕዳር", "ታሕሳስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዚያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ፓጉሜ"], we = ["እሑ", "ሰኞ", "ማክ", "ረቡ", "ሐሙ", "ዓር", "ቅዳ"], ke = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], Ne = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], Me = (e) => e ? `${ne[e.month - 1]} ${e.day}፣ ${e.year} ዓ.ም` : "", De = (e) => e ? e.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "", Ce = ({ year: e, month: t }) => t === 1 ? { year: e - 1, month: 13 } : { year: e, month: t - 1 }, Se = ({ year: e, month: t }) => t === 13 ? { year: e + 1, month: 1 } : { year: e, month: t + 1 }, Ee = ({ year: e, month: t }) => t === 1 ? { year: e - 1, month: 12 } : { year: e, month: t - 1 }, Le = ({ year: e, month: t }) => t === 12 ? { year: e + 1, month: 1 } : { year: e, month: t + 1 }, ae = ({ size: e = 16 }) => /* @__PURE__ */ r("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ r("path", { d: "m15 18-6-6 6-6" }) }), de = ({ size: e = 16 }) => /* @__PURE__ */ r("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ r("path", { d: "m9 18 6-6-6-6" }) }), F = ({ size: e = 16 }) => /* @__PURE__ */ u("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ r("rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("line", { x1: "16", x2: "16", y1: "2", y2: "6" }),
   /* @__PURE__ */ r("line", { x1: "8", x2: "8", y1: "2", y2: "6" }),
   /* @__PURE__ */ r("line", { x1: "3", x2: "21", y1: "10", y2: "10" })
-] }), K = ({ size: e = 16 }) => /* @__PURE__ */ h("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), K = ({ size: e = 16 }) => /* @__PURE__ */ u("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ r("path", { d: "M18 6 6 18" }),
   /* @__PURE__ */ r("path", { d: "m6 6 12 12" })
-] }), Q = ({ size: e = 16 }) => /* @__PURE__ */ h("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Q = ({ size: e = 16 }) => /* @__PURE__ */ u("svg", { width: e, height: e, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ r("path", { d: "m3 16 4 4 4-4" }),
   /* @__PURE__ */ r("path", { d: "M7 20V4" }),
   /* @__PURE__ */ r("path", { d: "m21 8-4-4-4 4" }),
   /* @__PURE__ */ r("path", { d: "M17 4v16" })
-] }), m = (...e) => e.filter(Boolean).join(" ");
-function R({ label: e, isToday: t, isSelected: a, isEmpty: n, onClick: i, customClasses: d = {} }) {
+] }), y = (...e) => e.filter(Boolean).join(" ");
+function R({ label: e, isToday: t, isSelected: a, isEmpty: n, onClick: p, customClasses: d = {} }) {
   return n ? /* @__PURE__ */ r("div", { className: "eth-dp-day-empty" }) : /* @__PURE__ */ r(
     "button",
     {
       type: "button",
-      onClick: i,
-      className: m(
+      onClick: p,
+      className: y(
         "eth-dp-day",
         a ? "eth-dp-day-selected" : "",
         d.base
@@ -67,48 +67,48 @@ function Z({
   onNext: t,
   month: a,
   monthList: n = [],
-  onMonthChange: i,
+  onMonthChange: p,
   badge: d,
-  year: f,
-  yearSuffix: g = "",
-  yearRange: y = [],
-  onYearChange: u,
+  year: h,
+  yearSuffix: b = "",
+  yearRange: f = [],
+  onYearChange: g,
   customClasses: s = {},
-  Icons: p
+  Icons: i
 }) {
-  const [l, x] = D(!1), [w, E] = D(!1), k = A(null), N = A(null);
-  G(() => {
+  const [l, x] = D(!1), [w, E] = D(!1), k = O(null), N = O(null);
+  j(() => {
     if (!l || !k.current) return;
-    const b = k.current.querySelector('[data-selected="true"]');
-    b && b.scrollIntoView({ block: "center" });
-  }, [l]), G(() => {
+    const m = k.current.querySelector('[data-selected="true"]');
+    m && m.scrollIntoView({ block: "center" });
+  }, [l]), j(() => {
     if (!w || !N.current) return;
-    const b = N.current.querySelector('[data-selected="true"]');
-    b && b.scrollIntoView({ block: "center" });
+    const m = N.current.querySelector('[data-selected="true"]');
+    m && m.scrollIntoView({ block: "center" });
   }, [w]);
   const M = () => {
-    x((b) => !b), E(!1);
+    x((m) => !m), E(!1);
   }, z = () => {
-    E((b) => !b), x(!1);
-  }, I = p.ChevronLeft || ae, L = p.ChevronRight || de;
-  return /* @__PURE__ */ h("div", { className: m("eth-dp-header", s.container), children: [
+    E((m) => !m), x(!1);
+  }, I = i.ChevronLeft || ae, L = i.ChevronRight || de;
+  return /* @__PURE__ */ u("div", { className: y("eth-dp-header", s.container), children: [
     /* @__PURE__ */ r(
       "button",
       {
         type: "button",
         onClick: e,
-        className: m("eth-dp-nav-btn", s.navBtn),
+        className: y("eth-dp-nav-btn", s.navBtn),
         children: /* @__PURE__ */ r(I, { size: 16 })
       }
     ),
-    /* @__PURE__ */ h("div", { className: "eth-dp-picker-group", children: [
-      n.length > 0 && i ? /* @__PURE__ */ h("div", { className: "eth-dp-rel", children: [
-        /* @__PURE__ */ h(
+    /* @__PURE__ */ u("div", { className: "eth-dp-picker-group", children: [
+      n.length > 0 && p ? /* @__PURE__ */ u("div", { className: "eth-dp-rel", children: [
+        /* @__PURE__ */ u(
           "button",
           {
             type: "button",
             onClick: M,
-            className: m("eth-dp-picker-btn", s.picker, l ? "is-active" : ""),
+            className: y("eth-dp-picker-btn", s.picker, l ? "is-active" : ""),
             children: [
               n[a - 1],
               " ",
@@ -121,33 +121,33 @@ function Z({
           "div",
           {
             ref: k,
-            className: m("eth-dp-list-dropdown eth-dp-month-list", s.dropdown),
-            children: n.map((b, v) => /* @__PURE__ */ r(
+            className: y("eth-dp-list-dropdown eth-dp-month-list", s.dropdown),
+            children: n.map((m, v) => /* @__PURE__ */ r(
               "button",
               {
                 type: "button",
                 "data-selected": v + 1 === a ? "true" : "false",
                 onClick: () => {
-                  i(v + 1), x(!1);
+                  p(v + 1), x(!1);
                 },
-                className: m("eth-dp-list-item", v + 1 === a ? "is-active" : ""),
-                children: b
+                className: y("eth-dp-list-item", v + 1 === a ? "is-active" : ""),
+                children: m
               },
               v
             ))
           }
         )
       ] }) : null,
-      y.length > 0 && u ? /* @__PURE__ */ h("div", { className: "eth-dp-rel", children: [
-        /* @__PURE__ */ h(
+      f.length > 0 && g ? /* @__PURE__ */ u("div", { className: "eth-dp-rel", children: [
+        /* @__PURE__ */ u(
           "button",
           {
             type: "button",
             onClick: z,
-            className: m("eth-dp-picker-btn", s.picker, w ? "is-active" : ""),
+            className: y("eth-dp-picker-btn", s.picker, w ? "is-active" : ""),
             children: [
-              f,
-              g,
+              h,
+              b,
               " ▾"
             ]
           }
@@ -156,22 +156,22 @@ function Z({
           "div",
           {
             ref: N,
-            className: m("eth-dp-list-dropdown eth-dp-year-list", s.dropdown),
-            children: y.map((b) => /* @__PURE__ */ h(
+            className: y("eth-dp-list-dropdown eth-dp-year-list", s.dropdown),
+            children: f.map((m) => /* @__PURE__ */ u(
               "button",
               {
                 type: "button",
-                "data-selected": b === f ? "true" : "false",
+                "data-selected": m === h ? "true" : "false",
                 onClick: () => {
-                  u(b), E(!1);
+                  g(m), E(!1);
                 },
-                className: m("eth-dp-list-item", b === f ? "is-active" : ""),
+                className: y("eth-dp-list-item", m === h ? "is-active" : ""),
                 children: [
-                  b,
-                  g
+                  m,
+                  b
                 ]
               },
-              b
+              m
             ))
           }
         )
@@ -182,49 +182,49 @@ function Z({
       {
         type: "button",
         onClick: t,
-        className: m("eth-dp-nav-btn", s.navBtn),
+        className: y("eth-dp-nav-btn", s.navBtn),
         children: /* @__PURE__ */ r(L, { size: 16 })
       }
     )
   ] });
 }
-function ze({ year: e, month: t, selectedEth: a, todayEth: n, onSelect: i, labels: d = {}, customClasses: f = {} }) {
-  const g = xe(e, t), y = oe(e, t), u = d.days || we, s = [];
-  for (let p = 0; p < g; p++) s.push(null);
-  for (let p = 1; p <= y; p++) s.push(p);
-  return /* @__PURE__ */ h("div", { className: "eth-dp-grid", children: [
-    u.map((p) => /* @__PURE__ */ r("div", { className: m("eth-dp-weekday", f.weekday), children: p }, p)),
+function ze({ year: e, month: t, selectedEth: a, todayEth: n, onSelect: p, labels: d = {}, customClasses: h = {} }) {
+  const b = xe(e, t), f = oe(e, t), g = d.days || we, s = [];
+  for (let i = 0; i < b; i++) s.push(null);
+  for (let i = 1; i <= f; i++) s.push(i);
+  return /* @__PURE__ */ u("div", { className: "eth-dp-grid", children: [
+    g.map((i) => /* @__PURE__ */ r("div", { className: y("eth-dp-weekday", h.weekday), children: i }, i)),
     s.map(
-      (p, l) => p === null ? /* @__PURE__ */ r(R, { isEmpty: !0 }, `b${l}`) : /* @__PURE__ */ r(
+      (i, l) => i === null ? /* @__PURE__ */ r(R, { isEmpty: !0 }, `b${l}`) : /* @__PURE__ */ r(
         R,
         {
-          label: p,
-          customClasses: f.dayCell,
-          isToday: !!(n && p === n.day && t === n.month && e === n.year),
-          isSelected: !!(a && p === a.day && t === a.month && e === a.year),
-          onClick: () => i(e, t, p)
+          label: i,
+          customClasses: h.dayCell,
+          isToday: !!(n && i === n.day && t === n.month && e === n.year),
+          isSelected: !!(a && i === a.day && t === a.month && e === a.year),
+          onClick: () => p(e, t, i)
         },
-        `d${p}`
+        `d${i}`
       )
     )
   ] });
 }
-function Ie({ year: e, month: t, selectedDate: a, today: n, onSelect: i, labels: d = {}, customClasses: f = {} }) {
-  const g = ye(e, t), y = me(e, t), u = d.days || Ne, s = [];
-  for (let l = 0; l < g; l++) s.push(null);
-  for (let l = 1; l <= y; l++) s.push(l);
-  const p = (l, x) => x && l === x.getDate() && t === x.getMonth() + 1 && e === x.getFullYear();
-  return /* @__PURE__ */ h("div", { className: "eth-dp-grid", children: [
-    u.map((l) => /* @__PURE__ */ r("div", { className: m("eth-dp-weekday", f.weekday), children: l }, l)),
+function Ie({ year: e, month: t, selectedDate: a, today: n, onSelect: p, labels: d = {}, customClasses: h = {} }) {
+  const b = ye(e, t), f = me(e, t), g = d.days || Ne, s = [];
+  for (let l = 0; l < b; l++) s.push(null);
+  for (let l = 1; l <= f; l++) s.push(l);
+  const i = (l, x) => x && l === x.getDate() && t === x.getMonth() + 1 && e === x.getFullYear();
+  return /* @__PURE__ */ u("div", { className: "eth-dp-grid", children: [
+    g.map((l) => /* @__PURE__ */ r("div", { className: y("eth-dp-weekday", h.weekday), children: l }, l)),
     s.map(
       (l, x) => l === null ? /* @__PURE__ */ r(R, { isEmpty: !0 }, `b${x}`) : /* @__PURE__ */ r(
         R,
         {
           label: l,
-          customClasses: f.dayCell,
-          isToday: !!p(l, n),
-          isSelected: !!p(l, a),
-          onClick: () => i(new Date(e, t - 1, l))
+          customClasses: h.dayCell,
+          isToday: !!i(l, n),
+          isSelected: !!i(l, a),
+          onClick: () => p(new Date(e, t - 1, l))
         },
         `d${l}`
       )
@@ -232,41 +232,44 @@ function Ie({ year: e, month: t, selectedDate: a, today: n, onSelect: i, labels:
   ] });
 }
 function Te({ anchorRef: e, children: t, dropW: a = 316 }) {
-  const [n, i] = D({ opacity: 0 }), d = P(() => {
+  const [n, p] = D({ opacity: 0 }), d = P(() => {
     if (!e.current) return;
-    const f = e.current.getBoundingClientRect();
-    let g = f.left + window.scrollX;
-    g + a > window.innerWidth - 8 && (g = window.innerWidth - a - 8), g < 8 && (g = 8), i({
+    const h = e.current.getBoundingClientRect();
+    let b = h.left + window.scrollX;
+    b + a > window.innerWidth - 8 && (b = window.innerWidth - a - 8), b < 8 && (b = 8);
+    const f = window.innerHeight - h.bottom, g = h.top, s = 380;
+    let i = h.bottom + window.scrollY + 6;
+    f < s && g > f && (i = h.top + window.scrollY - s - 6, i < window.scrollY + 6 && (i = window.scrollY + 6)), p({
       position: "absolute",
-      top: f.bottom + window.scrollY + 6,
-      left: g,
+      top: i,
+      left: b,
       width: a,
       zIndex: 99999,
       opacity: 1,
       transition: "opacity 0.15s ease-out"
     });
   }, [e, a]);
-  return G(() => (d(), window.addEventListener("resize", d), window.addEventListener("scroll", d, !0), () => {
+  return j(() => (d(), window.addEventListener("resize", d), window.addEventListener("scroll", d, !0), () => {
     window.removeEventListener("resize", d), window.removeEventListener("scroll", d, !0);
   }), [d]), ge(/* @__PURE__ */ r("div", { style: n, children: t }), document.body);
 }
-function Fe({
+function Ae({
   value: e = null,
   onChange: t,
   defaultCalendar: a = "ethiopian",
   label: n,
-  placeholder: i = "ቀን ይምረጡ…",
+  placeholder: p = "ቀን ይምረጡ…",
   disabled: d = !1,
-  customization: f = {}
+  customization: h = {}
 }) {
   var W, X, J, V, q;
-  const { labels: g = {}, classes: y = {}, config: u = {}, colors: s = {} } = f, p = {
-    Calendar: ((W = u.icons) == null ? void 0 : W.Calendar) || O,
-    X: ((X = u.icons) == null ? void 0 : X.X) || K,
-    ChevronLeft: ((J = u.icons) == null ? void 0 : J.ChevronLeft) || ae,
-    ChevronRight: ((V = u.icons) == null ? void 0 : V.ChevronRight) || de,
-    Switch: ((q = u.icons) == null ? void 0 : q.Switch) || Q
-  }, l = `eth-dp-size-${u.inputSize || "md"}`, x = {
+  const { labels: b = {}, classes: f = {}, config: g = {}, colors: s = {} } = h, i = {
+    Calendar: ((W = g.icons) == null ? void 0 : W.Calendar) || F,
+    X: ((X = g.icons) == null ? void 0 : X.X) || K,
+    ChevronLeft: ((J = g.icons) == null ? void 0 : J.ChevronLeft) || ae,
+    ChevronRight: ((V = g.icons) == null ? void 0 : V.ChevronRight) || de,
+    Switch: ((q = g.icons) == null ? void 0 : q.Switch) || Q
+  }, l = `eth-dp-size-${g.inputSize || "md"}`, x = {
     "--dp-primary": s.primary || "#7c3aed",
     "--dp-primary-alpha": s.primary ? `${s.primary}26` : "rgba(124, 58, 237, 0.15)",
     "--dp-bg": s.background || "#ffffff",
@@ -278,41 +281,41 @@ function Fe({
     "--dp-today-ring": s.todayRing || "#7c3aed",
     "--dp-selected-bg": s.selectedBg || "#7c3aed",
     "--dp-selected-shadow": s.selectedShadow || "rgba(124, 58, 237, 0.4)",
-    fontSize: u.fontSize || "inherit",
-    fontFamily: u.fontFamily || "inherit"
-  }, w = /* @__PURE__ */ new Date(), E = j(w), [k, N] = D(!1), [M, z] = D(a), [I, L] = D(null), b = e ? j(e) : E, [v, C] = D({ year: b.year, month: b.month }), [Y, S] = D({
+    fontSize: g.fontSize || "inherit",
+    fontFamily: g.fontFamily || "inherit"
+  }, w = /* @__PURE__ */ new Date(), E = Y(w), [k, N] = D(!1), [M, z] = D(a), [I, L] = D(null), m = e ? Y(e) : E, [v, C] = D({ year: m.year, month: m.month }), [G, S] = D({
     year: e ? e.getFullYear() : w.getFullYear(),
     month: e ? e.getMonth() + 1 : w.getMonth() + 1
-  }), F = A(null);
-  G(() => {
+  }), A = O(null);
+  j(() => {
     if (!k) return;
     const o = (c) => {
       var T;
-      (T = F.current) != null && T.contains(c.target) || c.target.closest("[data-eth-dp]") || N(!1);
+      (T = A.current) != null && T.contains(c.target) || c.target.closest("[data-eth-dp]") || N(!1);
     };
     return document.addEventListener("mousedown", o, !0), () => document.removeEventListener("mousedown", o, !0);
-  }, [k]), G(() => {
+  }, [k]), j(() => {
     if (!e) {
       L(null);
       return;
     }
     if (!I) {
-      const o = j(e);
+      const o = Y(e);
       C({ year: o.year, month: o.month });
     }
     S({ year: e.getFullYear(), month: e.getMonth() + 1 });
   }, [e, I]);
-  const _ = I ?? (e ? j(e) : null), B = P((o, c, T) => {
+  const B = I ?? (e ? Y(e) : null), _ = P((o, c, T) => {
     L({ year: o, month: c, day: T }), C({ year: o, month: c }), t == null || t(ve(o, c, T)), N(!1);
-  }, [t]), $ = P((o) => {
+  }, [t]), H = P((o) => {
     L(null), S({ year: o.getFullYear(), month: o.getMonth() + 1 }), t == null || t(o), N(!1);
   }, [t]), ie = (o) => {
     o.stopPropagation(), L(null), t == null || t(null);
-  }, se = e ? M === "ethiopian" ? Me(_) : De(e) : "", H = M === "ethiopian" && v.month === 13, pe = H ? oe(v.year, 13) : 0, le = p.Calendar || O, ce = p.X || K, he = p.Switch || Q;
-  return /* @__PURE__ */ h("div", { style: x, className: "eth-dp-theme-root", children: [
-    /* @__PURE__ */ h("div", { ref: F, className: m("eth-dp-trigger-container", y.container), children: [
+  }, se = e ? M === "ethiopian" ? Me(B) : De(e) : "", $ = M === "ethiopian" && v.month === 13, pe = $ ? oe(v.year, 13) : 0, le = i.Calendar || F, ce = i.X || K, he = i.Switch || Q;
+  return /* @__PURE__ */ u("div", { style: x, className: "eth-dp-theme-root", children: [
+    /* @__PURE__ */ u("div", { ref: A, className: y("eth-dp-trigger-container", f.container), children: [
       n && /* @__PURE__ */ r("label", { className: "eth-dp-label", children: n }),
-      /* @__PURE__ */ h(
+      /* @__PURE__ */ u(
         "button",
         {
           type: "button",
@@ -320,17 +323,17 @@ function Fe({
           onClick: () => {
             d || N((o) => !o);
           },
-          className: m(
+          className: y(
             "eth-dp-trigger",
             l,
             d ? "eth-dp-disabled" : "",
-            y.trigger,
+            f.trigger,
             k ? "is-open" : ""
           ),
           children: [
             /* @__PURE__ */ r(le, { size: 18, className: "eth-dp-trigger-icon" }),
-            /* @__PURE__ */ r("span", { className: "eth-dp-trigger-text", children: se || i }),
-            e && !d && !u.hideClear && /* @__PURE__ */ r(
+            /* @__PURE__ */ r("span", { className: "eth-dp-trigger-text", children: se || p }),
+            e && !d && !g.hideClear && /* @__PURE__ */ r(
               "span",
               {
                 role: "button",
@@ -344,22 +347,22 @@ function Fe({
         }
       )
     ] }),
-    k && /* @__PURE__ */ r(Te, { anchorRef: F, dropW: u.dropdownWidth || 316, children: /* @__PURE__ */ h(
+    k && /* @__PURE__ */ r(Te, { anchorRef: A, dropW: g.dropdownWidth || 316, children: /* @__PURE__ */ u(
       "div",
       {
         "data-eth-dp": "true",
-        className: m("eth-dp-theme-root eth-dp-dropdown", y.dropdown),
+        className: y("eth-dp-theme-root eth-dp-dropdown", f.dropdown),
         style: { ...x, animation: "dpIn 0.15s ease-out both" },
         children: [
-          /* @__PURE__ */ h("div", { className: "eth-dp-tabs", children: [
-            /* @__PURE__ */ h("div", { className: "eth-dp-tabs-group", children: [
+          /* @__PURE__ */ u("div", { className: "eth-dp-tabs", children: [
+            /* @__PURE__ */ u("div", { className: "eth-dp-tabs-group", children: [
               /* @__PURE__ */ r(
                 "button",
                 {
                   type: "button",
                   onClick: () => z("ethiopian"),
-                  className: m("eth-dp-tab", M === "ethiopian" ? "is-active" : ""),
-                  children: g.ethTab || "🇪🇹 ኢትዮጵያ"
+                  className: y("eth-dp-tab", M === "ethiopian" ? "is-active" : ""),
+                  children: b.ethTab || "🇪🇹 ኢትዮጵያ"
                 }
               ),
               /* @__PURE__ */ r(
@@ -367,12 +370,12 @@ function Fe({
                 {
                   type: "button",
                   onClick: () => z("gregorian"),
-                  className: m("eth-dp-tab", M === "gregorian" ? "is-active" : ""),
-                  children: g.gregTab || "🌍 Gregorian"
+                  className: y("eth-dp-tab", M === "gregorian" ? "is-active" : ""),
+                  children: b.gregTab || "🌍 Gregorian"
                 }
               )
             ] }),
-            !u.hideSwitch && /* @__PURE__ */ r(
+            !g.hideSwitch && /* @__PURE__ */ r(
               "button",
               {
                 type: "button",
@@ -382,25 +385,25 @@ function Fe({
               }
             )
           ] }),
-          /* @__PURE__ */ r("div", { className: "eth-dp-cal-body", children: M === "ethiopian" ? /* @__PURE__ */ h(U, { children: [
+          /* @__PURE__ */ r("div", { className: "eth-dp-cal-body", children: M === "ethiopian" ? /* @__PURE__ */ u(U, { children: [
             /* @__PURE__ */ r(
               Z,
               {
-                Icons: p,
+                Icons: i,
                 month: v.month,
-                monthList: g.ethiopianMonths || ne,
+                monthList: b.ethiopianMonths || ne,
                 onMonthChange: (o) => C((c) => ({ ...c, month: o })),
-                badge: H ? /* @__PURE__ */ h("span", { className: "eth-dp-pagume-badge", children: [
+                badge: $ ? /* @__PURE__ */ u("span", { className: "eth-dp-pagume-badge", children: [
                   pe,
-                  g.pagumeSuffix || "ቀ"
+                  b.pagumeSuffix || "ቀ"
                 ] }) : null,
                 year: v.year,
                 yearSuffix: " ዓ.ም",
-                yearRange: u.yearRangeEth || Array.from({ length: 201 }, (o, c) => 1950 + c),
+                yearRange: g.yearRangeEth || Array.from({ length: 201 }, (o, c) => 1950 + c),
                 onYearChange: (o) => C((c) => ({ ...c, year: o })),
                 onPrev: () => C((o) => Ce(o)),
                 onNext: () => C((o) => Se(o)),
-                customClasses: y.header
+                customClasses: f.header
               }
             ),
             /* @__PURE__ */ r(
@@ -408,55 +411,55 @@ function Fe({
               {
                 year: v.year,
                 month: v.month,
-                selectedEth: _,
+                selectedEth: B,
                 todayEth: E,
-                onSelect: B,
-                labels: { days: g.ethiopianDays },
-                customClasses: { weekday: y.weekday, dayCell: y.dayCell }
+                onSelect: _,
+                labels: { days: b.ethiopianDays },
+                customClasses: { weekday: f.weekday, dayCell: f.dayCell }
               }
             )
-          ] }) : /* @__PURE__ */ h(U, { children: [
+          ] }) : /* @__PURE__ */ u(U, { children: [
             /* @__PURE__ */ r(
               Z,
               {
-                Icons: p,
-                month: Y.month,
-                monthList: g.gregorianMonths || ke,
+                Icons: i,
+                month: G.month,
+                monthList: b.gregorianMonths || ke,
                 onMonthChange: (o) => S((c) => ({ ...c, month: o })),
-                year: Y.year,
+                year: G.year,
                 yearSuffix: "",
-                yearRange: u.yearRangeGreg || Array.from({ length: 201 }, (o, c) => 1957 + c),
+                yearRange: g.yearRangeGreg || Array.from({ length: 201 }, (o, c) => 1957 + c),
                 onYearChange: (o) => S((c) => ({ ...c, year: o })),
                 onPrev: () => S((o) => Ee(o)),
                 onNext: () => S((o) => Le(o)),
-                customClasses: y.header
+                customClasses: f.header
               }
             ),
             /* @__PURE__ */ r(
               Ie,
               {
-                year: Y.year,
-                month: Y.month,
+                year: G.year,
+                month: G.month,
                 selectedDate: e,
                 today: w,
-                onSelect: $,
-                labels: { days: g.gregorianDays },
-                customClasses: { weekday: y.weekday, dayCell: y.dayCell }
+                onSelect: H,
+                labels: { days: b.gregorianDays },
+                customClasses: { weekday: f.weekday, dayCell: f.dayCell }
               }
             )
           ] }) }),
-          /* @__PURE__ */ r("div", { className: m("eth-dp-footer", y.footer), children: /* @__PURE__ */ h(
+          /* @__PURE__ */ r("div", { className: y("eth-dp-footer", f.footer), children: /* @__PURE__ */ u(
             "button",
             {
               type: "button",
               onClick: () => {
-                const o = /* @__PURE__ */ new Date(), c = j(o);
-                M === "ethiopian" ? (C({ year: c.year, month: c.month }), B(c.year, c.month, c.day)) : (S({ year: o.getFullYear(), month: o.getMonth() + 1 }), $(o));
+                const o = /* @__PURE__ */ new Date(), c = Y(o);
+                M === "ethiopian" ? (C({ year: c.year, month: c.month }), _(c.year, c.month, c.day)) : (S({ year: o.getFullYear(), month: o.getMonth() + 1 }), H(o));
               },
               className: "eth-dp-today-btn",
               children: [
-                /* @__PURE__ */ r(O, { size: 14 }),
-                g.today || "ዛሬ (Today)"
+                /* @__PURE__ */ r(F, { size: 14 }),
+                b.today || "ዛሬ (Today)"
               ]
             }
           ) })
@@ -544,11 +547,11 @@ function Fe({
 export {
   we as ETHIOPIAN_DAYS_AM,
   ne as ETHIOPIAN_MONTHS_AM,
-  Fe as EthiopianDatePicker,
+  Ae as EthiopianDatePicker,
   Ne as GREGORIAN_DAYS_EN,
   ke as GREGORIAN_MONTHS_EN,
-  j as dateToEth,
-  Fe as default,
+  Y as dateToEth,
+  Ae as default,
   ve as ethToDate,
   Me as formatEthDate,
   De as formatGregDate,
